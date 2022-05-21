@@ -11,6 +11,11 @@ if erlang {
     ErlangLocalTime(date: ErlangDate, time: ErlangTime)
   }
 
-  pub external fn now() -> ErlangLocalTime =
+  pub fn now() -> ErlangLocalTime {
+    let #(#(y, mo, d), #(h, m, s)) = now_()
+    ErlangLocalTime(ErlangDate(y, mo, d), ErlangTime(h, m, s))
+  }
+
+  external fn now_() -> #(#(Int, Int, Int), #(Int, Int, Int)) =
     "chrono_ffi" "datetime_now"
 }
